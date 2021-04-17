@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { PrincipalComponent } from './principal/principal.component';
 import { PracticaRoutingModule } from './practica-routing.module';
-
+import {MatButtonModule} from '@angular/material/button';
 
 
 @NgModule({
@@ -11,7 +11,8 @@ import { PracticaRoutingModule } from './practica-routing.module';
   ],
   imports: [
     CommonModule,
-    PracticaRoutingModule
+    PracticaRoutingModule,
+    MatButtonModule
   ]
 })
 export class PracticaModule { }

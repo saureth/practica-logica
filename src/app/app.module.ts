@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { PracticaModule } from './practica/practica.module';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   declarations: [
@@ -12,7 +13,8 @@ import { PracticaModule } from './practica/practica.module';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    PracticaModule
+    PracticaModule,
+    BrowserAnimationsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
