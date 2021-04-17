@@ -1,10 +1,9 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { RouterModule, Routes } from '@angular/router';
-import { PracticaComponent } from './practica/practica.component';
+import { PrincipalComponent } from './principal/principal.component';
 
 const routes: Routes = [
-  { path: '', component: PracticaComponent },
+  { path: '', component: PrincipalComponent }
 ];
 
 @NgModule({

@@ -1,15 +1,17 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { PracticaComponent } from './practica/practica.component';
+import { PrincipalComponent } from './principal/principal.component';
+import { PracticaRoutingModule } from './practica-routing.module';
 
 
 
 @NgModule({
   declarations: [
-    PracticaComponent
+    PrincipalComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    PracticaRoutingModule
   ]
 })
 export class PracticaModule { }
