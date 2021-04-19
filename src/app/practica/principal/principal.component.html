@@ -1,21 +1,21 @@
 <div class="container">
-    <div class="game-selection">
+    <div class="game-selection" *ngIf="!gameIsSelected">
         <div class="title">
             <p> Elija una de las tres modalidades del juego</p>
         </div>
         <div class="button-container">
             <div class="game-select-button">
-                <button mat-raised-button >Modo 1</button>
+                <button mat-raised-button (click)="startGame(1)">Modo 1</button>
             </div>
             <div class="game-select-button">
-                <button mat-raised-button >Modo 2</button>
-            </div>
-            <div class="game-select-button">
-                <button mat-raised-button >Modo 3</button>
+                <button mat-raised-button (click)="startGame(1)">Modo 2</button>
             </div>
             <div>
-                <button mat-raised-button >Estadísticas</button>
+                <button mat-raised-button (click)="startGame(1)">Modo 3</button>
             </div>
         </div>        
+    </div>
+    <div class="game-one" *ngIf="gameIsSelected == true && selectedGame == 1 " >
+        <app-modo-uno></app-modo-uno>
     </div>
 </div>
