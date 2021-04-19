@@ -10,6 +10,7 @@ export class ModoUnoComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    console.log(Math.floor (Math.random() * 10));
   }
 
 }
