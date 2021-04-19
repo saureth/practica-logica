@@ -7,9 +7,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class PrincipalComponent implements OnInit {
 
+  gameIsSelected = false;
+  selectedGame = -1;
+
   constructor() { }
 
   ngOnInit(): void {
+  }
+
+  startGame(type: number){
+    this.gameIsSelected = true;
+    this.selectedGame = type;
   }
 
 }
