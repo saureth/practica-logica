@@ -14,14 +14,13 @@ export class ModoUnoComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    this.numero = Math.floor (Math.random() * 10);
     this.listaNumeros = new ListaSimple();
-  
     for (let index = 0; index < 4; index++) {
       this.numero = Math.floor (Math.random() * 10);
       this.listaNumeros.añadirAlFinal(this.numero);
     }
     this.listaNumeros.mostrarLista();
+    console.log(this.listaNumeros);
   }
 
 }

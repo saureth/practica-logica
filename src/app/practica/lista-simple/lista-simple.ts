@@ -11,9 +11,9 @@ export class ListaSimple {
     }
 
     crearLista(primerDato: number){
+        this.primerNodo = new NodoSimple();
         this.primerNodo.setDato(primerDato);
-        this.ultimoNodo = new NodoSimple();
-        this.primerNodo.setLiga(this.ultimoNodo);
+        this.ultimoNodo = this.primerNodo;
         this.esVacia = false;
     }
 
@@ -33,10 +33,14 @@ export class ListaSimple {
     }
 
     mostrarLista(){
+        let i: number = 0;
         let aux: NodoSimple = this.primerNodo;
         while(aux.liga != undefined){
             console.log("Dato: " + aux.dato);
             aux = aux.liga;
+        }
+        if(aux.liga == undefined && aux.dato != undefined){
+            console.log("Dato: " + aux.dato);
         }
     }
 
