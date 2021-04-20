@@ -17,6 +17,9 @@ export class ModoUnoComponent implements OnInit {
     this.listaNumeros = new ListaSimple();
     for (let index = 0; index < 4; index++) {
       this.numero = Math.floor (Math.random() * 10);
+      while(this.listaNumeros.buscarNumero(this.numero)) {
+        this.numero = Math.floor (Math.random() * 10);
+      }
       this.listaNumeros.añadirAlFinal(this.numero);
     }
     this.listaNumeros.mostrarLista();

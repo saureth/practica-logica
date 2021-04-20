@@ -33,7 +33,6 @@ export class ListaSimple {
     }
 
     mostrarLista(){
-        let i: number = 0;
         let aux: NodoSimple = this.primerNodo;
         while(aux.liga != undefined){
             console.log("Dato: " + aux.dato);
@@ -42,6 +41,20 @@ export class ListaSimple {
         if(aux.liga == undefined && aux.dato != undefined){
             console.log("Dato: " + aux.dato);
         }
+    }
+
+    buscarNumero(numero: number): boolean{
+        let aux = this.primerNodo;
+        while(aux.liga != undefined){
+            if (aux.dato == numero) {
+                return true;
+            }
+            else aux = aux.liga;
+        }
+        if(aux.liga == undefined && aux.dato != undefined && aux.dato == numero){
+            return true;
+        }
+        else return false;
     }
 
 }
