@@ -1,10 +1,10 @@
 export class NodoSimple {
 
-    dato: number;
+    dato: number | undefined;
     liga: NodoSimple | undefined;
 
     constructor(){
-        this.dato = -1;
+        this.dato = undefined;
         this.liga = undefined;
     }
 
