@@ -16,8 +16,12 @@ export class ModoUnoComponent implements OnInit {
   ngOnInit(): void {
     this.numero = Math.floor (Math.random() * 10);
     this.listaNumeros = new ListaSimple();
-    this.listaNumeros.crearLista(this.numero);
-    console.log(this.listaNumeros);
+  
+    for (let index = 0; index < 4; index++) {
+      this.numero = Math.floor (Math.random() * 10);
+      this.listaNumeros.añadirAlFinal(this.numero);
+    }
+    this.listaNumeros.mostrarLista();
   }
 
 }
