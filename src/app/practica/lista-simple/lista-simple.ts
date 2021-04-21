@@ -57,4 +57,22 @@ export class ListaSimple {
         else return false;
     }
 
+    buscarPosicionNumero(numero: number): number{
+        let aux = this.primerNodo;
+        let posicion = 0;
+        while(aux.liga != undefined){
+            if (aux.dato == numero) {
+                return posicion;
+            }
+            else {
+                aux = aux.liga;
+                posicion++;
+            }
+        }
+        if(aux.liga == undefined && aux.dato != undefined && aux.dato == numero){
+            return posicion;
+        }
+        else return -1;
+    }
+
 }
