@@ -28,19 +28,23 @@ export class ModoUnoComponent implements OnInit {
 
   comparar(){
     let _sUsuario: string = this.modoUnoFormGroup.get("numeroUsuario").value.toString(); // obtengo los 4 dígitos del usuario como string
+    let _picas: number = 0;
+    let _fijas: number = 0;
     for (let index = 0; index < _sUsuario.length; index++) { // itero sobre cada uno de esos 4 dígitos
       let _nUsuario: number = Number.parseInt(_sUsuario[index]); //tomo el dígito en esa posición y lo vuelvo un número
-      console.log(_nUsuario);
       let posicionEncontrado = this.listaNumeros?.buscarPosicionNumero(_nUsuario); // busco si en la lista está ese # y retorno la posición
       if(posicionEncontrado == -1){ // Esto es si el dígito no está en ninguna posición de la lista
-        console.log("No hay ni pica ni fija");
+        //console.log("No hay ni pica ni fija");
       }
       else if (index == posicionEncontrado) { // Esto es si el dígito está en la lista y en la misma posición
-        console.log("Obtiene fija");
+        //console.log("Obtiene fija");
+        _fijas ++;
       }else { // Esto es si el dígito sí está en la lista pero en una posición diferente
-        console.log("Obtiene pica");
+        //console.log("Obtiene pica");
+        _picas ++;
       }
     }
+    console.log("obtuvo " +_picas + " picas y " + _fijas + " fijas");
   }
 
   ngOnInit(): void {
