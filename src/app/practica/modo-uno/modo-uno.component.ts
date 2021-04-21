@@ -26,6 +26,15 @@ export class ModoUnoComponent implements OnInit {
     });
   }
 
+  comparar(){
+    let _nUsuario = this.contributionsFormGroup.get("numeroUsuario").value;
+    if (_nUsuario == true) {
+      
+    } else {
+      
+    }
+  }
+
   ngOnInit(): void {
     this.listaNumeros = new ListaSimple();
     for (let index = 0; index < 4; index++) {
