@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ListaSimple } from '../lista-simple/lista-simple';
 
 @Component({
@@ -10,8 +11,20 @@ export class ModoUnoComponent implements OnInit {
 
   listaNumeros: ListaSimple | undefined;
   numero: number = -1;
+  contributionsFormGroup: any;
 
-  constructor() { }
+  constructor( private readonly formBuilder: FormBuilder) { 
+    this.createContributionsFormGroup();
+
+  }
+  createContributionsFormGroup() {
+    this.contributionsFormGroup = this.formBuilder.group({
+      numeroUsuario: [
+        null,
+        [Validators.required],
+      ]
+    });
+  }
 
   ngOnInit(): void {
     this.listaNumeros = new ListaSimple();

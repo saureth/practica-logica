@@ -1,8 +1,8 @@
 <div class="form">
-    <form class="example-form">
+    <form class="example-form" [formGroup]="contributionsFormGroup">
         <mat-form-field class="example-full-width">
-            <mat-label>Favorite food</mat-label>
-            <input matInput placeholder="Ex. Pizza" value="Sushi">
+            <mat-label>Número</mat-label>
+            <input formControlName="numeroUsuario" matInput placeholder="Escriba un número de 4 dígitos sin repetir">
           </mat-form-field>
     </form>
 </div>

@@ -5,6 +5,7 @@ import { PracticaRoutingModule } from './practica-routing.module';
 import {MatButtonModule} from '@angular/material/button';
 import { ModoUnoComponent } from './modo-uno/modo-uno.component';
 import {MatInputModule} from '@angular/material/input';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({
@@ -16,7 +17,9 @@ import {MatInputModule} from '@angular/material/input';
     CommonModule,
     PracticaRoutingModule,
     MatButtonModule,
-    MatInputModule
+    MatInputModule,
+    FormsModule,
+    ReactiveFormsModule,
   ]
 })
 export class PracticaModule { }
