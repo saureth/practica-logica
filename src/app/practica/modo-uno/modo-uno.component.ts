@@ -17,6 +17,9 @@ export class ModoUnoComponent implements OnInit {
   columnasTabla: string[] = ['numeroUsuario', 'picas', 'fijas'];
   datosTabla: any[] = [];
   datos: any[] = [];
+  resultadoUltimoIntento: string="";
+  termino: boolean = false;
+  adivino: boolean = false;
 
   constructor(private readonly formBuilder: FormBuilder) {
     this.createModoUnoFormGroup();
@@ -50,7 +53,9 @@ export class ModoUnoComponent implements OnInit {
           _picas++;
         }
       }
-      console.log("obtuvo " + _picas + " picas y " + _fijas + " fijas");
+      this.resultadoUltimoIntento = "Intento # "+  (this.cuentaTurnos + 1) 
+        + ", obtuvo " + _picas + " picas y " + _fijas + " fijas"; 
+
       this.datos.push({
         numeroUsuario: Number.parseInt(_sUsuario),
         picas: _picas,
@@ -60,12 +65,19 @@ export class ModoUnoComponent implements OnInit {
       if (_fijas == 4) {
         console.log("adivino");
         this.cuentaTurnos = this.turnos;
+        this.termino = true;
+        this.adivino = true;
+        this.resultadoUltimoIntento += " ¡¡ Adivinó !! "
       } else {
         this.cuentaTurnos++;
       }
+      this.actualizarDatos();
     }
-    else {console.log("No hay más intentos");}
-    this.actualizarDatos();
+    else {
+      console.log("No hay más intentos");
+      this.termino = true;
+      this.adivino = false;
+    }
   }
 
   actualizarDatos(){
