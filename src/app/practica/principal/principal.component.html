@@ -1,4 +1,7 @@
 <div class="container">
+    <div>
+        <button mat-raised-button (click)="volverMenu()">Volver al menú</button>
+    </div>
     <div class="game-selection" *ngIf="!gameIsSelected">
         <div class="title">
             <p> Elija una de las tres modalidades del juego</p>
@@ -17,5 +20,8 @@
     </div>
     <div class="game-one" *ngIf="gameIsSelected == true && selectedGame == 1 " >
         <app-modo-uno></app-modo-uno>
+    </div>
+    <div class="game-two" *ngIf="gameIsSelected == true && selectedGame == 2 " >
+        <app-modo-dos></app-modo-dos>
     </div>
 </div>

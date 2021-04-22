@@ -6,12 +6,14 @@ import {MatButtonModule} from '@angular/material/button';
 import { ModoUnoComponent } from './modo-uno/modo-uno.component';
 import {MatInputModule} from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-
+import { ModoDosComponent } from './modo-dos/modo-dos.component';
+import {MatTableModule} from '@angular/material/table';
 
 @NgModule({
   declarations: [
     PrincipalComponent,
-    ModoUnoComponent
+    ModoUnoComponent,
+    ModoDosComponent
   ],
   imports: [
     CommonModule,
@@ -20,6 +22,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
     MatInputModule,
     FormsModule,
     ReactiveFormsModule,
+    MatTableModule
   ]
 })
 export class PracticaModule { }

@@ -20,4 +20,9 @@ export class PrincipalComponent implements OnInit {
     this.selectedGame = type;
   }
 
+  volverMenu(){
+    this.gameIsSelected = false;
+    this.selectedGame = -1;
+  }
+
 }
