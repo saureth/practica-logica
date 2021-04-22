@@ -1,3 +1,5 @@
+import { NgIf } from '@angular/common';
+import { invalid } from '@angular/compiler/src/render3/view/util';
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ListaSimple } from '../lista-simple/lista-simple';
@@ -10,6 +12,7 @@ import { ListaSimple } from '../lista-simple/lista-simple';
 export class ModoUnoComponent implements OnInit {
 
   listaNumeros: ListaSimple | undefined;
+  listaUsuario: ListaSimple | undefined;
   numero: number = -1;
   modoUnoFormGroup: any;
   turnos: number = 10;
@@ -29,14 +32,37 @@ export class ModoUnoComponent implements OnInit {
     this.modoUnoFormGroup = this.formBuilder.group({
       numeroUsuario: [
         null,
-        [Validators.required],
+        [Validators.required,
+        Validators.min(0),
+        Validators.max(9999)]
       ]
     });
   }
 
+  crearListaConNumero(numero: string): boolean{
+    let _invalido = false;
+    this.listaUsuario = new ListaSimple();
+    this.listaUsuario.añadirAlFinal(Number.parseInt(numero[0]));
+    for (let index = 1; index < numero.length; index++) {
+      const digito = Number.parseInt(numero[index]);
+      if(this.listaUsuario.buscarNumero(digito)){ 
+        index = numero.length;
+        _invalido = true;
+      }
+      else{
+        this.listaUsuario.añadirAlFinal(digito);
+      }
+    }
+    return _invalido;
+  }
+
   comparar() {
-    if (this.cuentaTurnos < this.turnos) {
-      let _sUsuario: string = this.modoUnoFormGroup.get("numeroUsuario").value.toString(); // obtengo los 4 dígitos del usuario como string
+    let _sUsuario: string = this.modoUnoFormGroup.get("numeroUsuario").value.toString(); // obtengo los 4 dígitos del usuario como string
+    let _invalido = this.crearListaConNumero(_sUsuario);
+    if(_invalido){
+      this.resultadoUltimoIntento = "El número es inválido, por favor revise";
+    }
+    else if (this.cuentaTurnos < this.turnos) {
       let _picas: number = 0;
       let _fijas: number = 0;
       for (let index = 0; index < _sUsuario.length; index++) { // itero sobre cada uno de esos 4 dígitos
