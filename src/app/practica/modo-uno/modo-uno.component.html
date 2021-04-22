@@ -1,9 +1,14 @@
-<div class="form">
-    <form class="example-form" [formGroup]="modoUnoFormGroup">
-        <mat-form-field class="example-full-width">
-            <mat-label>Número</mat-label>
-            <input type="number" formControlName="numeroUsuario" matInput placeholder="Escriba un número de 4 dígitos sin repetir">
-        </mat-form-field>
-        <button mat-raised-button (click)="comparar()">Adivinar</button>
+<div>
+    <form class="form" [formGroup]="modoUnoFormGroup">
+        <div>
+            <mat-form-field class="example-full-width">
+                <mat-label>Número</mat-label>
+                <input type="number" formControlName="numeroUsuario" matInput placeholder="Escriba un número de 4 dígitos sin repetir">
+            </mat-form-field>
+        </div>
+        <div>
+            <button mat-raised-button (click)="comparar()">Adivinar</button>
+        </div>
+
     </form>
 </div>
