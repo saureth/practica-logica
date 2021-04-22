@@ -1,40 +1,40 @@
 <div>
-    <form class="form" [formGroup]="modoUnoFormGroup">
-        <div>
-            <mat-form-field class="example-full-width">
-                <mat-label>Número</mat-label>
-                <input type="number" formControlName="numeroUsuario" matInput placeholder="Escriba un número de 4 dígitos sin repetir">
-            </mat-form-field>
-        </div>
-        <div>
-            <button mat-raised-button (click)="comparar()">Adivinar</button>
-        </div>
+  <form class="form" [formGroup]="modoUnoFormGroup">
+    <div>
+      <mat-form-field class="example-full-width">
+        <mat-label>Número</mat-label>
+        <input type="number" formControlName="numeroUsuario" matInput
+          placeholder="Escriba un número de 4 dígitos sin repetir">
+      </mat-form-field>
+    </div>
+    <div>
+      <button mat-raised-button (click)="comparar()">Adivinar</button>
+    </div>
 
-        <div class="resultado" >
-          <h3> {{resultadoUltimoIntento}}</h3>
-        </div>
+    <div class="resultado">
+      <h3> {{resultadoUltimoIntento}}</h3>
+    </div>
+    <div class="table">
+      <mat-table [dataSource]="datosTabla" class="mat-elevation-z8">
 
-        <div class="table">
-            <mat-table [dataSource]="datosTabla" class="mat-elevation-z8">
+        <ng-container matColumnDef="numeroUsuario">
+          <mat-header-cell *matHeaderCellDef> Número </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.numeroUsuario}} </mat-cell>
+        </ng-container>
 
-                <ng-container matColumnDef="numeroUsuario">
-                  <mat-header-cell *matHeaderCellDef> Número </mat-header-cell>
-                  <mat-cell *matCellDef="let element"> {{element.numeroUsuario}} </mat-cell>
-                </ng-container>
+        <ng-container matColumnDef="fijas">
+          <mat-header-cell *matHeaderCellDef> Fijas </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.fijas}} </mat-cell>
+        </ng-container>
 
-                <ng-container matColumnDef="fijas">
-                  <mat-header-cell *matHeaderCellDef> Fijas </mat-header-cell>
-                  <mat-cell *matCellDef="let element"> {{element.fijas}} </mat-cell>
-                </ng-container>
+        <ng-container matColumnDef="picas">
+          <mat-header-cell *matHeaderCellDef> Picas </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.picas}} </mat-cell>
+        </ng-container>
 
-                <ng-container matColumnDef="picas">
-                    <mat-header-cell *matHeaderCellDef> Picas </mat-header-cell>
-                    <mat-cell *matCellDef="let element"> {{element.picas}} </mat-cell>
-                  </ng-container>
-
-                <mat-header-row *matHeaderRowDef="columnasTabla"></mat-header-row>
-                <mat-row *matRowDef="let row; columns: columnasTabla;"></mat-row>
-              </mat-table>
-        </div>
-    </form>
+        <mat-header-row *matHeaderRowDef="columnasTabla"></mat-header-row>
+        <mat-row *matRowDef="let row; columns: columnasTabla;"></mat-row>
+      </mat-table>
+    </div>
+  </form>
 </div>
