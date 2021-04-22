@@ -10,5 +10,27 @@
             <button mat-raised-button (click)="comparar()">Adivinar</button>
         </div>
 
+        <div class="table">
+            <mat-table [dataSource]="datosTabla" class="mat-elevation-z8">
+
+                <ng-container matColumnDef="numeroUsuario">
+                  <mat-header-cell *matHeaderCellDef> Número </mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.numeroUsuario}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="fijas">
+                  <mat-header-cell *matHeaderCellDef> Fijas </mat-header-cell>
+                  <mat-cell *matCellDef="let element"> {{element.fijas}} </mat-cell>
+                </ng-container>
+
+                <ng-container matColumnDef="picas">
+                    <mat-header-cell *matHeaderCellDef> Picas </mat-header-cell>
+                    <mat-cell *matCellDef="let element"> {{element.picas}} </mat-cell>
+                  </ng-container>
+
+                <mat-header-row *matHeaderRowDef="columnasTabla"></mat-header-row>
+                <mat-row *matRowDef="let row; columns: columnasTabla;"></mat-row>
+              </mat-table>
+        </div>
     </form>
 </div>

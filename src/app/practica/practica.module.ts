@@ -22,6 +22,7 @@ import {MatTableModule} from '@angular/material/table';
     MatInputModule,
     FormsModule,
     ReactiveFormsModule,
+    MatTableModule
   ]
 })
 export class PracticaModule { }

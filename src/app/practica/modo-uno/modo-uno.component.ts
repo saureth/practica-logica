@@ -14,11 +14,14 @@ export class ModoUnoComponent implements OnInit {
   modoUnoFormGroup: any;
   turnos: number = 10;
   cuentaTurnos: number = 0;
+  columnasTabla: string[] = ['numeroUsuario', 'picas', 'fijas'];
+  datosTabla: any[] = [];
+  datos: any[] = [];
 
   constructor(private readonly formBuilder: FormBuilder) {
     this.createModoUnoFormGroup();
-
   }
+
   createModoUnoFormGroup() {
     this.modoUnoFormGroup = this.formBuilder.group({
       numeroUsuario: [
@@ -29,7 +32,6 @@ export class ModoUnoComponent implements OnInit {
   }
 
   comparar() {
-
     if (this.cuentaTurnos < this.turnos) {
       let _sUsuario: string = this.modoUnoFormGroup.get("numeroUsuario").value.toString(); // obtengo los 4 dígitos del usuario como string
       let _picas: number = 0;
@@ -49,16 +51,28 @@ export class ModoUnoComponent implements OnInit {
         }
       }
       console.log("obtuvo " + _picas + " picas y " + _fijas + " fijas");
+      this.datos.push({
+        numeroUsuario: Number.parseInt(_sUsuario),
+        picas: _picas,
+        fijas: _fijas
+      });
+
       if (_fijas == 4) {
         console.log("adivino");
         this.cuentaTurnos = this.turnos;
       } else {
         this.cuentaTurnos++;
-
       }
-
     }
-    else console.log("No hay más intentos");
+    else {console.log("No hay más intentos");}
+    this.actualizarDatos();
+  }
+
+  actualizarDatos(){
+    this.datosTabla= [];
+    this.datos.forEach(dato => {
+      this.datosTabla.push(dato);
+    });
   }
 
   ngOnInit(): void {

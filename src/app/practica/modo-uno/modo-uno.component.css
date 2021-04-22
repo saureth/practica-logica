@@ -6,6 +6,8 @@
     align-items: center;
 }
 
-.example-full-width {
-    width: 100%;
+.table{
+    padding-top: 2em;
+    display: block;
+    width: 80%;
 }
