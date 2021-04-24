@@ -43,7 +43,13 @@ export class ModoDosComponent implements OnInit {
         [Validators.required,
         Validators.min(0),
         Validators.max(9999)]
-      ]
+      ],
+      numeroAdivinarUsuario: [
+        null,
+        [Validators.required,
+        Validators.min(0),
+        Validators.max(9999)]
+      ],
     });
   }
 
