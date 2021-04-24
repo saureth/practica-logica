@@ -123,11 +123,11 @@ export class ModoDosComponent implements OnInit {
       } else {
         //this.cuentaTurnos++;
       }
-      this.actualizarDatos();
+      this.actualizarDatosUsuario();
     }
   }
 
-  actualizarDatos(){
+  actualizarDatosUsuario(){
     this.datosTablaUsuario= [];
     this.datosUsuario.forEach(dato => {
       this.datosTablaUsuario.push(dato);
