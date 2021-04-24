@@ -27,6 +27,53 @@
           <button mat-raised-button (click)="comparar()">Adivinar</button>
         </div>
       </div>
+      <div class="tables">
+        <div class="table">
+          <mat-table [dataSource]="datosTablaUsuario" class="mat-elevation-z8">
+    
+            <ng-container matColumnDef="numeroUsuario">
+              <mat-header-cell *matHeaderCellDef> Número </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.numeroUsuario}} </mat-cell>
+            </ng-container>
+    
+            <ng-container matColumnDef="fijas">
+              <mat-header-cell *matHeaderCellDef> Fijas </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.fijas}} </mat-cell>
+            </ng-container>
+    
+            <ng-container matColumnDef="picas">
+              <mat-header-cell *matHeaderCellDef> Picas </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.picas}} </mat-cell>
+            </ng-container>
+    
+            <mat-header-row *matHeaderRowDef="columnasTablaUsuario"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: columnasTablaUsuario;"></mat-row>
+          </mat-table>
+        </div>
+        <div class="table">
+          <mat-table [dataSource]="datosTablaMaquina" class="mat-elevation-z8">
+    
+            <ng-container matColumnDef="numeroMaquina">
+              <mat-header-cell *matHeaderCellDef> Número </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.numeroMaquina}} </mat-cell>
+            </ng-container>
+    
+            <ng-container matColumnDef="fijas">
+              <mat-header-cell *matHeaderCellDef> Fijas </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.fijas}} </mat-cell>
+            </ng-container>
+    
+            <ng-container matColumnDef="picas">
+              <mat-header-cell *matHeaderCellDef> Picas </mat-header-cell>
+              <mat-cell *matCellDef="let element"> {{element.picas}} </mat-cell>
+            </ng-container>
+    
+            <mat-header-row *matHeaderRowDef="columnasTablaMaquina"></mat-header-row>
+            <mat-row *matRowDef="let row; columns: columnasTablaMaquina;"></mat-row>
+          </mat-table>
+        </div>
+      </div>
+      
     </form>
 </div>
 

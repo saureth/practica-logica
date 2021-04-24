@@ -15,10 +15,16 @@ export class ModoDosComponent implements OnInit {
   listaUsuario: any;
   resultadoUltimoIntento: string="";
   cantidadDigitos: number = 4;
-  datos: any[] = [];
+  datosUsuario: any[] = [];
+  columnasTablaUsuario: string[] = ['numeroUsuario', 'picas', 'fijas'];
+  datosTablaUsuario: any[] = [];
+
+  datosMaquina: any[] = [];
+  columnasTablaMaquina: string[] = ['numeroMaquina', 'picas', 'fijas'];
+  datosTablaMaquina: any[] = [];
+
   adivinoUsuario = false;
   adivinoMaquina = false;
-  datosTabla: any[] = [];
   empezoJuego = false;
   
   constructor(private readonly formBuilder: FormBuilder) {
@@ -102,7 +108,7 @@ export class ModoDosComponent implements OnInit {
       }
       this.resultadoUltimoIntento = //"Intento # "+  (this.cuentaTurnos + 1) 
          "Obtuvo " + _picas + " picas y " + _fijas + " fijas"; 
-      this.datos.push({
+      this.datosUsuario.push({
         numeroUsuario: Number.parseInt(_sUsuario),
         picas: _picas,
         fijas: _fijas
@@ -122,9 +128,9 @@ export class ModoDosComponent implements OnInit {
   }
 
   actualizarDatos(){
-    this.datosTabla= [];
-    this.datos.forEach(dato => {
-      this.datosTabla.push(dato);
+    this.datosTablaUsuario= [];
+    this.datosUsuario.forEach(dato => {
+      this.datosTablaUsuario.push(dato);
     });
   }
 
