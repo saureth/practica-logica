@@ -104,8 +104,10 @@ export class ModoDosComponent implements OnInit {
   }
 
   guardarNumeroUsuario(){
-    this.numeroUsuario = this.modoDosFormGroup.get("numeroUsuario").value;
-    this.empezoJuego = true;
+    if(this.modoDosFormGroup.get("numeroUsuario").valid){
+      this.numeroUsuario = this.modoDosFormGroup.get("numeroUsuario").value;
+      this.empezoJuego = true;
+    }
   }
 
 }
