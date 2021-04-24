@@ -13,25 +13,27 @@ export class ModoDosComponent implements OnInit {
   numeroUsuario: any;
   numeroMaquina: any;
   listaUsuario: any;
+  listaMaquina: any;
   resultadoUltimoIntento: string="";
   cantidadDigitos: number = 4;
-  datos: any[] = [];
+  datosUsuario: any[] = [];
+  columnasTablaUsuario: string[] = ['numeroUsuario', 'picas', 'fijas'];
+  datosTablaUsuario: any[] = [];
+
+  datosMaquina: any[] = [];
+  columnasTablaMaquina: string[] = ['numeroMaquina', 'picas', 'fijas'];
+  datosTablaMaquina: any[] = [];
+
   adivinoUsuario = false;
   adivinoMaquina = false;
-  datosTabla: any[] = [];
+  empezoJuego = false;
   
-  constructor(private readonly formBuilder: FormBuilder) { }
+  constructor(private readonly formBuilder: FormBuilder) {
+    this.createModoDosFormGroup();
+  }
 
   ngOnInit(): void {
-    this.numeroMaquina = new ListaSimple();
-    let _numero = -1;
-    for (let index = 0; index < 4; index++) {
-      _numero = Math.floor(Math.random() * 10);
-      while (this.numeroMaquina.buscarNumero(_numero)) {
-        _numero = Math.floor(Math.random() * 10);
-      }
-      this.numeroMaquina.añadirAlFinal(_numero);
-    }
+    this.numeroMaquina = ListaSimple.crearListaConAleatorios();
   }
 
   createModoDosFormGroup() {
@@ -41,37 +43,20 @@ export class ModoDosComponent implements OnInit {
         [Validators.required,
         Validators.min(0),
         Validators.max(9999)]
-      ]
+      ],
+      numeroAdivinarUsuario: [
+        null,
+        [Validators.required,
+        Validators.min(0),
+        Validators.max(9999)]
+      ],
     });
-  }
-
-  crearListaConNumero(numero: string): boolean{
-    let _invalido = false;
-    let _cantidad = 0;
-    this.listaUsuario = new ListaSimple();
-    this.listaUsuario.añadirAlFinal(Number.parseInt(numero[0]));
-    _cantidad ++;
-    for (let index = 1; index < numero.length; index++) {
-      const digito = Number.parseInt(numero[index]);
-      if(this.listaUsuario.buscarNumero(digito)){ 
-        index = numero.length;
-        _invalido = true;
-      }
-      else{
-        this.listaUsuario.añadirAlFinal(digito);
-        _cantidad ++;
-      }
-    }
-    if (_cantidad != 4 ) {
-      _invalido = true;
-    }
-    return _invalido;
   }
 
   comparar() {
     let _sUsuario: string = this.modoDosFormGroup.get("numeroAdivinarUsuario").value.toString(); // obtengo los 4 dígitos del usuario como string
-    let _invalido = this.crearListaConNumero(_sUsuario);
-    if(_invalido){
+    this.listaUsuario = ListaSimple.crearListaConNumero(_sUsuario);
+    if(!this.listaUsuario){
       this.resultadoUltimoIntento = "El número es inválido, por favor revise";
     }
     else {
@@ -93,8 +78,7 @@ export class ModoDosComponent implements OnInit {
       }
       this.resultadoUltimoIntento = //"Intento # "+  (this.cuentaTurnos + 1) 
          "Obtuvo " + _picas + " picas y " + _fijas + " fijas"; 
-
-      this.datos.push({
+      this.datosUsuario.push({
         numeroUsuario: Number.parseInt(_sUsuario),
         picas: _picas,
         fijas: _fijas
@@ -109,19 +93,34 @@ export class ModoDosComponent implements OnInit {
       } else {
         //this.cuentaTurnos++;
       }
-      this.actualizarDatos();
+      this.actualizarDatosUsuario();
     }
+    this.adivinarMaquina();
   }
 
-  actualizarDatos(){
-    this.datosTabla= [];
-    this.datos.forEach(dato => {
-      this.datosTabla.push(dato);
+  adivinarMaquina(){
+    this.listaMaquina = ListaSimple.crearListaConAleatorios();
+  }
+
+  actualizarDatosUsuario(){
+    this.datosTablaUsuario= [];
+    this.datosUsuario.forEach(dato => {
+      this.datosTablaUsuario.push(dato);
     });
   }
 
   guardarNumeroUsuario(){
-    this.numeroUsuario = this.modoDosFormGroup.get("numeroUsuario").value;
+    if(this.modoDosFormGroup.get("numeroUsuario").valid){
+      this.numeroUsuario = ListaSimple.crearListaConNumero(this.modoDosFormGroup.get("numeroUsuario").value + "");
+      if(!this.numeroUsuario){
+        this.empezoJuego = false;
+        this.resultadoUltimoIntento = "El número es inválido, por favor revise";
+      }
+      else {
+        this.empezoJuego = true;
+        this.resultadoUltimoIntento = "";
+      }
+    }
   }
 
 }
