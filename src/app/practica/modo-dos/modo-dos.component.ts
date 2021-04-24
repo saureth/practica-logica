@@ -32,15 +32,7 @@ export class ModoDosComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.numeroMaquina = new ListaSimple();
-    let _numero = -1;
-    for (let index = 0; index < 4; index++) {
-      _numero = Math.floor(Math.random() * 10);
-      while (this.numeroMaquina.buscarNumero(_numero)) {
-        _numero = Math.floor(Math.random() * 10);
-      }
-      this.numeroMaquina.añadirAlFinal(_numero);
-    }
+    this.numeroMaquina = ListaSimple.crearListaConAleatorios();
   }
 
   createModoDosFormGroup() {
@@ -60,33 +52,10 @@ export class ModoDosComponent implements OnInit {
     });
   }
 
-  crearListaConNumero(numero: string): boolean{
-    let _invalido = false;
-    let _cantidad = 0;
-    this.listaUsuario = new ListaSimple();
-    this.listaUsuario.añadirAlFinal(Number.parseInt(numero[0]));
-    _cantidad ++;
-    for (let index = 1; index < numero.length; index++) {
-      const digito = Number.parseInt(numero[index]);
-      if(this.listaUsuario.buscarNumero(digito)){ 
-        index = numero.length;
-        _invalido = true;
-      }
-      else{
-        this.listaUsuario.añadirAlFinal(digito);
-        _cantidad ++;
-      }
-    }
-    if (_cantidad != 4 ) {
-      _invalido = true;
-    }
-    return _invalido;
-  }
-
   comparar() {
     let _sUsuario: string = this.modoDosFormGroup.get("numeroAdivinarUsuario").value.toString(); // obtengo los 4 dígitos del usuario como string
-    let _invalido = this.crearListaConNumero(_sUsuario);
-    if(_invalido){
+    this.listaUsuario = ListaSimple.crearListaConNumero(_sUsuario);
+    if(!this.listaUsuario){
       this.resultadoUltimoIntento = "El número es inválido, por favor revise";
     }
     else {

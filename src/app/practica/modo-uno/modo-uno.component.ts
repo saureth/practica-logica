@@ -11,7 +11,7 @@ import { ListaSimple } from '../lista-simple/lista-simple';
 })
 export class ModoUnoComponent implements OnInit {
 
-  listaNumeros: ListaSimple | undefined;
+  listaNumeros: any;
   listaUsuario: ListaSimple | undefined;
   numero: number = -1;
   modoUnoFormGroup: any;
@@ -40,33 +40,10 @@ export class ModoUnoComponent implements OnInit {
     });
   }
 
-  crearListaConNumero(numero: string): boolean{
-    let _invalido = false;
-    let _cantidad = 0;
-    this.listaUsuario = new ListaSimple();
-    this.listaUsuario.añadirAlFinal(Number.parseInt(numero[0]));
-    _cantidad ++;
-    for (let index = 1; index < numero.length; index++) {
-      const digito = Number.parseInt(numero[index]);
-      if(this.listaUsuario.buscarNumero(digito)){ 
-        index = numero.length;
-        _invalido = true;
-      }
-      else{
-        this.listaUsuario.añadirAlFinal(digito);
-        _cantidad ++;
-      }
-    }
-    if (_cantidad != 4 ) {
-      _invalido = true;
-    }
-    return _invalido;
-  }
-
   comparar() {
     let _sUsuario: string = this.modoUnoFormGroup.get("numeroUsuario").value.toString(); // obtengo los 4 dígitos del usuario como string
-    let _invalido = this.crearListaConNumero(_sUsuario);
-    if(_invalido){
+    this.listaUsuario = ListaSimple.crearListaConNumero(_sUsuario);
+    if(!this.listaUsuario){
       this.resultadoUltimoIntento = "El número es inválido, por favor revise";
     }
     else if (this.cuentaTurnos < this.turnos) {
@@ -121,15 +98,7 @@ export class ModoUnoComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.listaNumeros = new ListaSimple();
-    for (let index = 0; index < 4; index++) {
-      this.numero = Math.floor(Math.random() * 10);
-      while (this.listaNumeros.buscarNumero(this.numero)) {
-        this.numero = Math.floor(Math.random() * 10);
-      }
-      this.listaNumeros.añadirAlFinal(this.numero);
-    }
-    this.listaNumeros.mostrarLista();
+    this.listaNumeros = ListaSimple.crearListaConAleatorios();
     console.log(this.listaNumeros);
   }
 

@@ -17,6 +17,42 @@ export class ListaSimple {
         this.esVacia = false;
     }
 
+    static crearListaConNumero(numero: string): any {
+        let _invalido = false;
+        let _cantidad = 0;
+        let listaVacia = new ListaSimple();
+        listaVacia.añadirAlFinal(Number.parseInt(numero[0]));
+        _cantidad ++;
+        for (let index = 1; index < numero.length; index++) {
+          const digito = Number.parseInt(numero[index]);
+          if(listaVacia.buscarNumero(digito)){ 
+            index = numero.length;
+            _invalido = true;
+            return null;
+          }
+          else{
+            listaVacia.añadirAlFinal(digito);
+            _cantidad ++;
+          }
+        }
+        if (_cantidad != 4 ) {
+          _invalido = true;
+          return null;
+        }
+        return listaVacia;
+    }
+
+    static crearListaConAleatorios(){
+        let listaAleatoria = new ListaSimple();
+        let _numero = -1;
+        for (let index = 0; index < 4; index++) {
+        _numero = Math.floor(Math.random() * 10);
+        while (listaAleatoria.buscarNumero(_numero)) {
+            _numero = Math.floor(Math.random() * 10);
+        }
+        listaAleatoria.añadirAlFinal(_numero);
+        }
+    }
 
     añadirAlFinal(dato: number){
         if (this.esVacia) {
