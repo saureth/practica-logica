@@ -1,1 +1,15 @@
-<p>modo-dos works!</p>
+<div>
+    <form class="form" [formGroup]="modoDosFormGroup">
+      <div>
+        <mat-form-field class="example-full-width">
+          <mat-label>Número para que la máquina adivine</mat-label>
+          <input type="number" formControlName="numeroUsuario" matInput
+            placeholder="Escriba un número de 4 dígitos sin repetir">
+        </mat-form-field>
+      </div>
+      <div>
+        <button mat-raised-button (click)="guardarNumeroUsuario()">Aceptar</button>
+      </div>
+    </form>
+</div>
+

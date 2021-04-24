@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-modo-dos',
@@ -7,9 +8,27 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ModoDosComponent implements OnInit {
 
-  constructor() { }
+  modoDosFormGroup: any;
+  numeroUsuario: any;
+  
+  constructor(private readonly formBuilder: FormBuilder) { }
 
   ngOnInit(): void {
+  }
+
+  createModoDosFormGroup() {
+    this.modoDosFormGroup = this.formBuilder.group({
+      numeroUsuario: [
+        null,
+        [Validators.required,
+        Validators.min(0),
+        Validators.max(9999)]
+      ]
+    });
+  }
+
+  guardarNumeroUsuario(){
+    this.numeroUsuario = this.modoDosFormGroup.get("numeroUsuario").value;
   }
 
 }
