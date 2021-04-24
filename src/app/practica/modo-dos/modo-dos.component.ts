@@ -105,8 +105,15 @@ export class ModoDosComponent implements OnInit {
 
   guardarNumeroUsuario(){
     if(this.modoDosFormGroup.get("numeroUsuario").valid){
-      this.numeroUsuario = this.modoDosFormGroup.get("numeroUsuario").value;
-      this.empezoJuego = true;
+      this.numeroUsuario = ListaSimple.crearListaConNumero(this.modoDosFormGroup.get("numeroUsuario").value + "");
+      if(!this.numeroUsuario){
+        this.empezoJuego = false;
+        this.resultadoUltimoIntento = "El número es inválido, por favor revise";
+      }
+      else {
+        this.empezoJuego = true;
+        this.resultadoUltimoIntento = "";
+      }
     }
   }
 

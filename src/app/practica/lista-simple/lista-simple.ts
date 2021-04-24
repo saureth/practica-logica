@@ -6,11 +6,11 @@ export class ListaSimple {
     ultimoNodo;
     esVacia = true;
 
-    constructor(){
+    constructor() {
         this.primerNodo = this.ultimoNodo = new NodoSimple();
     }
 
-    crearLista(primerDato: number){
+    crearLista(primerDato: number) {
         this.primerNodo = new NodoSimple();
         this.primerNodo.setDato(primerDato);
         this.ultimoNodo = this.primerNodo;
@@ -22,46 +22,46 @@ export class ListaSimple {
         let _cantidad = 0;
         let listaVacia = new ListaSimple();
         listaVacia.añadirAlFinal(Number.parseInt(numero[0]));
-        _cantidad ++;
+        _cantidad++;
         for (let index = 1; index < numero.length; index++) {
-          const digito = Number.parseInt(numero[index]);
-          if(listaVacia.buscarNumero(digito)){ 
-            index = numero.length;
+            const digito = Number.parseInt(numero[index]);
+            if (listaVacia.buscarNumero(digito)) {
+                index = numero.length;
+                _invalido = true;
+                return null;
+            }
+            else {
+                listaVacia.añadirAlFinal(digito);
+                _cantidad++;
+            }
+        }
+        if (_cantidad != 4) {
             _invalido = true;
             return null;
-          }
-          else{
-            listaVacia.añadirAlFinal(digito);
-            _cantidad ++;
-          }
-        }
-        if (_cantidad != 4 ) {
-          _invalido = true;
-          return null;
         }
         return listaVacia;
     }
 
-    static crearListaConAleatorios(){
+    static crearListaConAleatorios() {
         let listaAleatoria = new ListaSimple();
         let _numero = -1;
         for (let index = 0; index < 4; index++) {
-        _numero = Math.floor(Math.random() * 10);
-        while (listaAleatoria.buscarNumero(_numero)) {
             _numero = Math.floor(Math.random() * 10);
-        }
-        listaAleatoria.añadirAlFinal(_numero);
+            while (listaAleatoria.buscarNumero(_numero)) {
+                _numero = Math.floor(Math.random() * 10);
+            }
+            listaAleatoria.añadirAlFinal(_numero);
         }
     }
 
-    añadirAlFinal(dato: number){
+    añadirAlFinal(dato: number) {
         if (this.esVacia) {
             this.crearLista(dato);
         } else {
             let nuevoNodo = new NodoSimple();
             nuevoNodo.setDato(dato);
             let aux = this.primerNodo;
-            while(aux.liga != null){
+            while (aux.liga != null) {
                 aux = aux.liga;
             }
             aux.setLiga(nuevoNodo);
@@ -69,53 +69,53 @@ export class ListaSimple {
         }
     }
 
-    mostrarLista(){
+    mostrarLista() {
         let aux: NodoSimple = this.primerNodo;
-        while(aux.liga != undefined){
+        while (aux.liga != undefined) {
             console.log("Dato: " + aux.dato);
             aux = aux.liga;
         }
-        if(aux.liga == undefined && aux.dato != undefined){
+        if (aux.liga == undefined && aux.dato != undefined) {
             console.log("Dato: " + aux.dato);
         }
     }
 
-    buscarNumero(numero: number): boolean{
+    buscarNumero(numero: number): boolean {
         let aux = this.primerNodo;
-        while(aux.liga != undefined){
+        while (aux.liga != undefined) {
             if (aux.dato == numero) {
                 return true;
             }
             else aux = aux.liga;
         }
-        if(aux.liga == undefined && aux.dato != undefined && aux.dato == numero){
+        if (aux.liga == undefined && aux.dato != undefined && aux.dato == numero) {
             return true;
         }
         else return false;
     }
 
-    retornaNumeroEnPosicion(posicion: number): number{
+    retornaNumeroEnPosicion(posicion: number): number {
         let aux = this.primerNodo;
         let _contador = 0;
-        while(aux.liga != undefined){
+        while (aux.liga != undefined) {
             if (_contador == posicion) {
                 return aux.getDato();
             }
-            else{ 
+            else {
                 aux = aux.liga;
-                _contador ++;
+                _contador++;
             }
         }
-        if(aux.liga == undefined && aux.dato != undefined && _contador == posicion){
+        if (aux.liga == undefined && aux.dato != undefined && _contador == posicion) {
             return aux.getDato();
         }
         else return -1;
     }
 
-    buscarPosicionNumero(numero?: number): number{
+    buscarPosicionNumero(numero?: number): number {
         let aux = this.primerNodo;
         let posicion = 0;
-        while(aux.liga != undefined){
+        while (aux.liga != undefined) {
             if (aux.dato == numero) {
                 return posicion;
             }
@@ -124,7 +124,7 @@ export class ListaSimple {
                 posicion++;
             }
         }
-        if(aux.liga == undefined && aux.dato != undefined && aux.dato == numero){
+        if (aux.liga == undefined && aux.dato != undefined && aux.dato == numero) {
             return posicion;
         }
         else return -1;
