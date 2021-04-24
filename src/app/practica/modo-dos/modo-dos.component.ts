@@ -102,7 +102,6 @@ export class ModoDosComponent implements OnInit {
       }
       this.resultadoUltimoIntento = //"Intento # "+  (this.cuentaTurnos + 1) 
          "Obtuvo " + _picas + " picas y " + _fijas + " fijas"; 
-
       this.datos.push({
         numeroUsuario: Number.parseInt(_sUsuario),
         picas: _picas,
