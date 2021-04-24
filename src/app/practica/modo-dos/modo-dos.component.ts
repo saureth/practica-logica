@@ -20,7 +20,9 @@ export class ModoDosComponent implements OnInit {
   adivinoMaquina = false;
   datosTabla: any[] = [];
   
-  constructor(private readonly formBuilder: FormBuilder) { }
+  constructor(private readonly formBuilder: FormBuilder) {
+    this.createModoDosFormGroup();
+  }
 
   ngOnInit(): void {
     this.numeroMaquina = new ListaSimple();
