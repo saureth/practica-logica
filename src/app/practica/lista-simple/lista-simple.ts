@@ -17,6 +17,7 @@ export class ListaSimple {
         this.esVacia = false;
     }
 
+
     añadirAlFinal(dato: number){
         if (this.esVacia) {
             this.crearLista(dato);
@@ -57,7 +58,25 @@ export class ListaSimple {
         else return false;
     }
 
-    buscarPosicionNumero(numero: number): number{
+    retornaNumeroEnPosicion(posicion: number): number{
+        let aux = this.primerNodo;
+        let _contador = 0;
+        while(aux.liga != undefined){
+            if (_contador == posicion) {
+                return aux.getDato();
+            }
+            else{ 
+                aux = aux.liga;
+                _contador ++;
+            }
+        }
+        if(aux.liga == undefined && aux.dato != undefined && _contador == posicion){
+            return aux.getDato();
+        }
+        else return -1;
+    }
+
+    buscarPosicionNumero(numero?: number): number{
         let aux = this.primerNodo;
         let posicion = 0;
         while(aux.liga != undefined){
