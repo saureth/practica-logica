@@ -13,6 +13,7 @@ export class ModoDosComponent implements OnInit {
   numeroUsuario: any;
   numeroMaquina: any;
   listaUsuario: any;
+  listaMaquina: any;
   resultadoUltimoIntento: string="";
   cantidadDigitos: number = 4;
   datosUsuario: any[] = [];
@@ -94,6 +95,11 @@ export class ModoDosComponent implements OnInit {
       }
       this.actualizarDatosUsuario();
     }
+    this.adivinarMaquina();
+  }
+
+  adivinarMaquina(){
+    this.listaMaquina = ListaSimple.crearListaConAleatorios();
   }
 
   actualizarDatosUsuario(){
