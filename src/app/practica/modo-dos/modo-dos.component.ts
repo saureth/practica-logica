@@ -19,6 +19,7 @@ export class ModoDosComponent implements OnInit {
   adivinoUsuario = false;
   adivinoMaquina = false;
   datosTabla: any[] = [];
+  empezoJuego = false;
   
   constructor(private readonly formBuilder: FormBuilder) {
     this.createModoDosFormGroup();
@@ -130,6 +131,7 @@ export class ModoDosComponent implements OnInit {
 
   guardarNumeroUsuario(){
     this.numeroUsuario = this.modoDosFormGroup.get("numeroUsuario").value;
+    this.empezoJuego = true;
   }
 
 }

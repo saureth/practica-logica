@@ -1,24 +1,28 @@
 <div>
     <form class="form" [formGroup]="modoDosFormGroup">
-      <div>
-        <mat-form-field class="example-full-width">
-          <mat-label>Número para que la máquina adivine</mat-label>
-          <input type="number" formControlName="numeroUsuario" matInput
-            placeholder="Escriba un número de 4 dígitos sin repetir">
-        </mat-form-field>
+      <div class="configuracion" *ngIf="!empezoJuego">
+        <div>
+          <mat-form-field class="example-full-width">
+            <mat-label>Número para que la máquina adivine</mat-label>
+            <input type="number" formControlName="numeroUsuario" matInput
+              placeholder="Escriba un número de 4 dígitos sin repetir">
+          </mat-form-field>
+        </div>
+        <div>
+          <button mat-raised-button (click)="guardarNumeroUsuario()">Aceptar</button>
+        </div>
       </div>
-      <div>
-        <button mat-raised-button (click)="guardarNumeroUsuario()">Aceptar</button>
-      </div>
-      <div>
-        <mat-form-field class="example-full-width">
-          <mat-label>Número</mat-label>
-          <input type="number" formControlName="numeroAdivinarUsuario" matInput
-            placeholder="Escriba el número que cree que la máquina eligió">
-        </mat-form-field>
-      </div>
-      <div>
-        <button mat-raised-button (click)="comparar()">Aceptar</button>
+      <div class="juego" *ngIf="!!empezoJuego">
+        <div>
+          <mat-form-field class="example-full-width">
+            <mat-label>Número</mat-label>
+            <input type="number" formControlName="numeroAdivinarUsuario" matInput
+              placeholder="Escriba el número que cree que la máquina eligió">
+          </mat-form-field>
+        </div>
+        <div>
+          <button mat-raised-button (click)="comparar()">Adivinar</button>
+        </div>
       </div>
     </form>
 </div>
