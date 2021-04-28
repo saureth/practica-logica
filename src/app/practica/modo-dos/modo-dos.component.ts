@@ -57,7 +57,7 @@ export class ModoDosComponent implements OnInit {
     let _sUsuario: string = this.modoDosFormGroup.get("numeroAdivinarUsuario").value.toString(); // obtengo los 4 dígitos del usuario como string
     this.listaUsuario = ListaSimple.crearListaConNumero(_sUsuario);
     if(!this.listaUsuario){
-      this.resultadoUltimoIntento = "El número es inválido, por favor revise";
+      this.mostrarResultado("El número es inválido, por favor revise");
     }
     else {
       let _picas: number = 0;
@@ -76,8 +76,7 @@ export class ModoDosComponent implements OnInit {
           _picas++;
         }
       }
-      this.resultadoUltimoIntento = //"Intento # "+  (this.cuentaTurnos + 1) 
-         "Obtuvo " + _picas + " picas y " + _fijas + " fijas"; 
+      this.mostrarResultado("Obtuvo " + _picas + " picas y " + _fijas + " fijas");
       this.datosUsuario.push({
         numeroUsuario: Number.parseInt(_sUsuario),
         picas: _picas,
@@ -89,7 +88,7 @@ export class ModoDosComponent implements OnInit {
       //this.cuentaTurnos = this.turnos;
         //this.termino = true;
         this.adivinoUsuario = true;
-        this.resultadoUltimoIntento += " ¡¡ Adivinó !! "
+        this.mostrarResultado(" ¡¡ Adivinó !! ");
       } else {
         //this.cuentaTurnos++;
       }
@@ -109,12 +108,16 @@ export class ModoDosComponent implements OnInit {
     });
   }
 
+  mostrarResultado(res: string){
+    this.resultadoUltimoIntento = res;
+  }
+
   guardarNumeroUsuario(){
     if(this.modoDosFormGroup.get("numeroUsuario").valid){
       this.numeroUsuario = ListaSimple.crearListaConNumero(this.modoDosFormGroup.get("numeroUsuario").value + "");
       if(!this.numeroUsuario){
         this.empezoJuego = false;
-        this.resultadoUltimoIntento = "El número es inválido, por favor revise";
+        this.mostrarResultado("El número es inválido, por favor revise");
       }
       else {
         this.empezoJuego = true;
