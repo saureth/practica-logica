@@ -146,4 +146,17 @@ export class ListaSimple {
         return n;
     }
 
+    static obtenerNumeroComoString(lista: ListaSimple): string{
+        let s = "";
+        let aux: NodoSimple = lista.primerNodo;
+        while (aux.liga != undefined) {
+            s += aux.dato;
+            aux = aux.liga;
+        }
+        if (aux.liga == undefined && aux.dato != undefined) {
+            s+= aux.dato;        
+        }
+        return s;
+    }
+
 }

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ListaSimple } from '../lista-simple/lista-simple';
+import { validarNumero } from '../otros/validadores';
 
 @Component({
   selector: 'app-modo-dos',
@@ -27,6 +28,8 @@ export class ModoDosComponent implements OnInit {
   adivinoUsuario = false;
   adivinoMaquina = false;
   empezoJuego = false;
+
+  numerValido = false;
   
   constructor(private readonly formBuilder: FormBuilder) {
     this.createModoDosFormGroup();
@@ -34,6 +37,7 @@ export class ModoDosComponent implements OnInit {
 
   ngOnInit(): void {
     this.numeroMaquina = ListaSimple.crearListaConAleatorios();
+    this.numeroMaquina.mostrarLista();
   }
 
   createModoDosFormGroup() {
@@ -74,21 +78,26 @@ export class ModoDosComponent implements OnInit {
     if (_fijas == 4) {
       !!esUsuario ? this.adivinoUsuario = true: this.adivinoMaquina = true;
       this.mostrarResultado(" ¡¡ Adivinó !! ");
-    } else {
+    } else if(!this.adivinoUsuario && !this.adivinoMaquina && !!esUsuario){
       this.mostrarResultado("Obtuvo " + _picas + " picas y " + _fijas+ " fijas");
     }
-    !!esUsuario ? this.actualizarDatos(_fijas, _picas, true): this.actualizarDatos(_fijas, _picas, false, ListaSimple.obtenerNumero(this.listaMaquina));
+    !!esUsuario ? this.actualizarDatos(_fijas, _picas, true): this.actualizarDatos(_fijas, _picas, false, ListaSimple.obtenerNumeroComoString(this.listaMaquina));
   }
 
   adivinarUsuario() {
     let _sUsuario: string = this.modoDosFormGroup.get("numeroAdivinarUsuario").value.toString(); // obtengo los 4 dígitos del usuario como string
-    this.listaUsuario = ListaSimple.crearListaConNumero(_sUsuario);
-    if(!this.listaUsuario){
-      this.mostrarResultado("El número es inválido, por favor revise");
+    if(this.modoDosFormGroup.get("numeroAdivinarUsuario").valid && validarNumero(_sUsuario)  == true) {
+      this.listaUsuario = ListaSimple.crearListaConNumero(_sUsuario);
+      if(!this.listaUsuario){
+        this.mostrarResultado("El número es inválido, por favor revise");
+      }
+      else {
+        this.comparar(this.listaUsuario, true);
+        this.adivinarMaquina();
+      }
     }
-    else {
-      this.comparar(this.listaUsuario, true);
-      this.adivinarMaquina();
+    else{
+      this.mostrarResultado("El número es inválido, por favor revise");
     }
   }
 
@@ -97,7 +106,7 @@ export class ModoDosComponent implements OnInit {
     this.comparar(this.listaMaquina, false);
   }
 
-  actualizarDatos(f: number, p: number, esUsuario: boolean, numero?: number){
+  actualizarDatos(f: number, p: number, esUsuario: boolean, numero?: string){
     if(!!esUsuario){
       this.datosUsuario.push({
         numeroUsuario: this.modoDosFormGroup.get("numeroAdivinarUsuario").value,
@@ -111,7 +120,7 @@ export class ModoDosComponent implements OnInit {
     }
     else {
       this.datosMaquina.push({
-        numeroMaquina: numero,
+        numeroMaquina: numero?.toString(),
         picas: p,
         fijas: f
       });
@@ -127,7 +136,7 @@ export class ModoDosComponent implements OnInit {
   }
 
   guardarNumeroUsuario(){
-    if(this.modoDosFormGroup.get("numeroUsuario").valid){
+    if(this.modoDosFormGroup.get("numeroUsuario").valid && validarNumero(this.modoDosFormGroup.get("numeroUsuario").value)  == true){
       this.numeroUsuario = ListaSimple.crearListaConNumero(this.modoDosFormGroup.get("numeroUsuario").value + "");
       if(!this.numeroUsuario){
         this.empezoJuego = false;
@@ -135,8 +144,12 @@ export class ModoDosComponent implements OnInit {
       }
       else {
         this.empezoJuego = true;
-        this.resultadoUltimoIntento = "";
+        this.mostrarResultado("");
       }
+    }
+    else {
+      this.empezoJuego = false;
+      this.mostrarResultado("El número es inválido, por favor revise");
     }
   }
 
