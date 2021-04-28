@@ -77,7 +77,7 @@ export class ModoDosComponent implements OnInit {
     } else {
       this.mostrarResultado("Obtuvo " + _picas + " picas y " + _fijas+ " fijas");
     }
-    !!esUsuario ? this.actualizarDatos(_fijas, _picas, esUsuario): this.actualizarDatos(_fijas, _picas, esUsuario, ListaSimple.obtenerNumero(this.listaMaquina));
+    !!esUsuario ? this.actualizarDatos(_fijas, _picas, true): this.actualizarDatos(_fijas, _picas, false, ListaSimple.obtenerNumero(this.listaMaquina));
   }
 
   adivinarUsuario() {
@@ -88,6 +88,7 @@ export class ModoDosComponent implements OnInit {
     }
     else {
       this.comparar(this.listaUsuario, true);
+      this.adivinarMaquina();
     }
   }
 
