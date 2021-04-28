@@ -42,7 +42,7 @@ export class ListaSimple {
         return listaVacia;
     }
 
-    static crearListaConAleatorios() {
+    static crearListaConAleatorios(): ListaSimple {
         let listaAleatoria = new ListaSimple();
         let _numero = -1;
         for (let index = 0; index < 4; index++) {
@@ -52,6 +52,7 @@ export class ListaSimple {
             }
             listaAleatoria.añadirAlFinal(_numero);
         }
+        return listaAleatoria;
     }
 
     añadirAlFinal(dato: number) {
