@@ -42,7 +42,7 @@ export class ListaSimple {
         return listaVacia;
     }
 
-    static crearListaConAleatorios() {
+    static crearListaConAleatorios(): ListaSimple {
         let listaAleatoria = new ListaSimple();
         let _numero = -1;
         for (let index = 0; index < 4; index++) {
@@ -52,6 +52,7 @@ export class ListaSimple {
             }
             listaAleatoria.añadirAlFinal(_numero);
         }
+        return listaAleatoria;
     }
 
     añadirAlFinal(dato: number) {
@@ -128,6 +129,34 @@ export class ListaSimple {
             return posicion;
         }
         else return -1;
+    }
+
+    static obtenerNumero(lista: ListaSimple): number{
+        let n = -1;
+        let s = "";
+        let aux: NodoSimple = lista.primerNodo;
+        while (aux.liga != undefined) {
+            s += aux.dato;
+            aux = aux.liga;
+        }
+        if (aux.liga == undefined && aux.dato != undefined) {
+            s+= aux.dato;        
+        }
+        n = Number.parseInt(s);
+        return n;
+    }
+
+    static obtenerNumeroComoString(lista: ListaSimple): string{
+        let s = "";
+        let aux: NodoSimple = lista.primerNodo;
+        while (aux.liga != undefined) {
+            s += aux.dato;
+            aux = aux.liga;
+        }
+        if (aux.liga == undefined && aux.dato != undefined) {
+            s+= aux.dato;        
+        }
+        return s;
     }
 
 }

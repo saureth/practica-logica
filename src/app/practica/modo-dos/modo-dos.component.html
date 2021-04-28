@@ -4,7 +4,7 @@
         <div>
           <mat-form-field class="example-full-width">
             <mat-label>Número para que la máquina adivine</mat-label>
-            <input type="number" formControlName="numeroUsuario" matInput
+            <input type="text" formControlName="numeroUsuario" matInput
               placeholder="Escriba un número de 4 dígitos sin repetir">
           </mat-form-field>
         </div>
@@ -16,12 +16,12 @@
         <div>
           <mat-form-field class="example-full-width">
             <mat-label>Número</mat-label>
-            <input type="number" formControlName="numeroAdivinarUsuario" matInput
+            <input type="text" formControlName="numeroAdivinarUsuario" matInput
               placeholder="Escriba el número que cree que la máquina eligió">
           </mat-form-field>
         </div>
         <div>
-          <button mat-raised-button (click)="comparar()">Adivinar</button>
+          <button mat-raised-button (click)="adivinarUsuario()">Adivinar</button>
         </div>
       </div>
       <div class="resultado">
