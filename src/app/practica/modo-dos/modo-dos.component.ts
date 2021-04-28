@@ -53,7 +53,7 @@ export class ModoDosComponent implements OnInit {
     });
   }
 
-  comparar(lista: ListaSimple){
+  comparar(lista: ListaSimple, esUsuario: boolean){
     let _picas: number = 0;
     let _fijas: number = 0;
     for (let index = 0; index < this.cantidadDigitos; index++) { // itero sobre cada uno de esos 4 dígitos
@@ -72,40 +72,53 @@ export class ModoDosComponent implements OnInit {
     }
 
     if (_fijas == 4) {
-      console.log("adivino");
-      this.adivinoUsuario = true;
+      !!esUsuario ? this.adivinoUsuario = true: this.adivinoMaquina = true;
       this.mostrarResultado(" ¡¡ Adivinó !! ");
     } else {
       this.mostrarResultado("Obtuvo " + _picas + " picas y " + _fijas+ " fijas");
     }
-    this.actualizarDatosUsuario(_fijas, _picas);
+    !!esUsuario ? this.actualizarDatos(_fijas, _picas, esUsuario): this.actualizarDatos(_fijas, _picas, esUsuario, ListaSimple.obtenerNumero(this.listaMaquina));
   }
 
-  adivinar() {
+  adivinarUsuario() {
     let _sUsuario: string = this.modoDosFormGroup.get("numeroAdivinarUsuario").value.toString(); // obtengo los 4 dígitos del usuario como string
     this.listaUsuario = ListaSimple.crearListaConNumero(_sUsuario);
     if(!this.listaUsuario){
       this.mostrarResultado("El número es inválido, por favor revise");
     }
     else {
-      this.comparar(this.listaUsuario);
+      this.comparar(this.listaUsuario, true);
     }
   }
 
   adivinarMaquina(){
     this.listaMaquina = ListaSimple.crearListaConAleatorios();
+    this.comparar(this.listaMaquina, false);
   }
 
-  actualizarDatosUsuario(f: number, p: number){
-    this.datosUsuario.push({
-      numeroUsuario: this.modoDosFormGroup.get("numeroAdivinarUsuario").value,
-      picas: p,
-      fijas: f
-    });
-    this.datosTablaUsuario= [];
-    this.datosUsuario.forEach(dato => {
-      this.datosTablaUsuario.push(dato);
-    });
+  actualizarDatos(f: number, p: number, esUsuario: boolean, numero?: number){
+    if(!!esUsuario){
+      this.datosUsuario.push({
+        numeroUsuario: this.modoDosFormGroup.get("numeroAdivinarUsuario").value,
+        picas: p,
+        fijas: f
+      });
+      this.datosTablaUsuario= [];
+      this.datosUsuario.forEach(dato => {
+        this.datosTablaUsuario.push(dato);
+      });
+    }
+    else {
+      this.datosMaquina.push({
+        numeroMaquina: numero,
+        picas: p,
+        fijas: f
+      });
+      this.datosTablaMaquina= [];
+      this.datosMaquina.forEach(dato => {
+        this.datosTablaMaquina.push(dato);
+      });
+    }
   }
 
   mostrarResultado(res: string){

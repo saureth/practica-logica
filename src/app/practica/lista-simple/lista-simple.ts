@@ -130,4 +130,19 @@ export class ListaSimple {
         else return -1;
     }
 
+    static obtenerNumero(lista: ListaSimple): number{
+        let n = -1;
+        let s = "";
+        let aux: NodoSimple = lista.primerNodo;
+        while (aux.liga != undefined) {
+            s += aux.dato;
+            aux = aux.liga;
+        }
+        if (aux.liga == undefined && aux.dato != undefined) {
+            s+= aux.dato;        
+        }
+        n = Number.parseInt(s);
+        return n;
+    }
+
 }
