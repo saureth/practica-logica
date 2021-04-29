@@ -12,9 +12,11 @@ export class ModoDosComponent implements OnInit {
   @Input() modo: any;
   modoDosFormGroup: any;
   numeroUsuario: any;
+  numeroUsuarioDos: any;
   numeroMaquina: any;
   listaUsuario: any;
   listaMaquina: any;
+  listaUsuarioDos: any;
   resultadoUltimoIntento: string="";
   cantidadDigitos: number = 4;
   datosUsuario: any[] = [];
@@ -35,8 +37,23 @@ export class ModoDosComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.numeroMaquina = ListaSimple.crearListaConAleatorios();
-    this.numeroMaquina.mostrarLista();
+    if(this.modo === 3){
+      this.modoDosFormGroup.controls['numeroUsuarioDos'].setValidators(
+        [Validators.required,
+          Validators.min(0),
+          Validators.max(9999)]
+      );
+      this.modoDosFormGroup.controls['numeroAdivinarUsuarioDos'].setValidators(
+        [Validators.required,
+          Validators.min(0),
+          Validators.max(9999)]
+      );
+    }
+    else{
+      this.numeroMaquina = ListaSimple.crearListaConAleatorios();
+      this.numeroMaquina.mostrarLista();
+    }
+    this.modoDosFormGroup.updateValueAndValidity();
   }
 
   createModoDosFormGroup() {
@@ -47,26 +64,38 @@ export class ModoDosComponent implements OnInit {
         Validators.min(0),
         Validators.max(9999)]
       ],
+      numeroUsuarioDos: [
+        null,
+        []
+      ],
       numeroAdivinarUsuario: [
         null,
         [Validators.required,
         Validators.min(0),
         Validators.max(9999)]
       ],
+      numeroAdivinarUsuarioDos: [
+        null,
+        []
+      ],
     });
   }
 
-  comparar(lista: ListaSimple, esUsuario: boolean){
+  comparar(lista: ListaSimple, esUsuario: boolean, cualUsuario?: number){
     if (this.adivinoUsuario || this.adivinoMaquina) {
       return;
     }
     let _picas: number = 0;
     let _fijas: number = 0;
     let _lista: ListaSimple;
-    if (!!esUsuario) {
-      _lista = this.numeroMaquina;
+    if (!!esUsuario && this.modo === 2) { 
+      // Si el que está jugando es el usuario y además el contrincante es la máquina
+      _lista = this.numeroMaquina; // la lista que tiene que adivinar es la de la máquina
+    }else if(!!esUsuario && this.modo === 3){
+      // Si el que está jugando es el usuario PERO el contrincante es el otro usuario
+      _lista = this.numeroUsuarioDos; // la lista que tiene que adivinar es la del segundo usuario
     }
-    else _lista = this.numeroUsuario;
+    else _lista = this.numeroUsuario; // Si el que está jugando es la máquina, ella tiene que adivinar el # del usuario
 
     for (let index = 0; index < this.cantidadDigitos; index++) { // itero sobre cada uno de esos 4 dígitos
       let _nUsuario = lista.retornaNumeroEnPosicion(index); //tomo el dígito en esa posición y lo vuelvo un número
@@ -84,26 +113,53 @@ export class ModoDosComponent implements OnInit {
     }
 
     if (_fijas == 4) {
+      // Si hay 4 fijas, es que el que está jugando ganó
       !!esUsuario ? this.adivinoUsuario = true: this.adivinoMaquina = true;
       let s = " ¡¡ Adivinó ";
       !!esUsuario ? s += "usuario !!": s += "máquina !!";
       this.mostrarResultado(s);
-    } else if(!this.adivinoUsuario && !this.adivinoMaquina && !!esUsuario){
-      this.mostrarResultado("Obtuvo " + _picas + " picas y " + _fijas+ " fijas");
     }
-    !!esUsuario ? this.actualizarDatos(_fijas, _picas, true): this.actualizarDatos(_fijas, _picas, false, ListaSimple.obtenerNumeroComoString(this.listaMaquina));
+    else {
+      // Si no hay 4 fijas, se muestra el resultado
+      this.calcularTextoResultado(esUsuario,_picas,_fijas,lista,cualUsuario);
+    }
+      
+  }
+
+  calcularTextoResultado(esUsuario: boolean, _picas:number, _fijas: number, lista: ListaSimple, cualUsuario?: number) {
+    if(this.modo === 2 && !!esUsuario){
+      // Si está jugador vs máquina y el que está jugando es el jugador uno, se muestra el resultado 
+      // y se actualiza la primera tabla
+      this.mostrarResultado("Obtuvo " + _picas + " picas y " + _fijas+ " fijas");
+      this.actualizarDatos(_fijas, _picas, true);
+    }
+    else if(this.modo === 2){
+      // Si está jugando contra la máquina y el que está jugando es la máquina, actualiza la tabla
+      this.actualizarDatos(_fijas, _picas, false, ListaSimple.obtenerNumeroComoString(this.listaMaquina));
+    }
+    else if(cualUsuario === 2){
+      this.mostrarResultado( this.resultadoUltimoIntento+ "Jugador 2: Obtuvo " + _picas + " picas y " + _fijas+ " fijas " );
+      this.actualizarDatos(_fijas, _picas, false, ListaSimple.obtenerNumeroComoString(lista));
+    }
+    else{
+      this.mostrarResultado("Jugador 1: Obtuvo " + _picas + " picas y " + _fijas+ " fijas " );
+      this.actualizarDatos(_fijas, _picas, true);
+    }
   }
 
   adivinarUsuario() {
-    let _sUsuario: string = this.modoDosFormGroup.get("numeroAdivinarUsuario").value.toString(); // obtengo los 4 dígitos del usuario como string
+    let _sUsuario: string = this.modoDosFormGroup.get("numeroAdivinarUsuario").value; // obtengo los 4 dígitos del usuario como string
     if(this.modoDosFormGroup.get("numeroAdivinarUsuario").valid && validarNumero(_sUsuario)  == true) {
       this.listaUsuario = ListaSimple.crearListaConNumero(_sUsuario);
       if(!this.listaUsuario){
         this.mostrarResultado("El número es inválido, por favor revise");
       }
-      else {
+      else if(this.modo === 3){
+        this.adivinarUsuarioDos();
+      }
+      else{
         this.comparar(this.listaUsuario, true);
-        !!(this.modo === 3)? this.adivinarUsuarioDos(): this.adivinarMaquina();
+        this.adivinarMaquina();
       }
     }
     else{
@@ -112,14 +168,15 @@ export class ModoDosComponent implements OnInit {
   }
 
   adivinarUsuarioDos() {
-    let _sUsuario: string = this.modoDosFormGroup.get("numeroAdivinarUsuarioDos").value.toString(); // obtengo los 4 dígitos del usuario como string
+    let _sUsuario: string = this.modoDosFormGroup.get("numeroAdivinarUsuarioDos").value; // obtengo los 4 dígitos del usuario como string
     if(this.modoDosFormGroup.get("numeroAdivinarUsuarioDos").valid && validarNumero(_sUsuario)  == true) {
-      this.listaUsuario = ListaSimple.crearListaConNumero(_sUsuario);
-      if(!this.listaUsuario){
+      this.listaUsuarioDos = ListaSimple.crearListaConNumero(_sUsuario);
+      if(!this.listaUsuarioDos){
         this.mostrarResultado("El número del usuario dos es inválido, por favor revise");
       }
       else {
         this.comparar(this.listaUsuario, true);
+        this.comparar(this.listaUsuarioDos, false, 2);
       }
     }
     else{
@@ -169,13 +226,37 @@ export class ModoDosComponent implements OnInit {
         this.mostrarResultado("El número es inválido, por favor revise");
       }
       else {
+        if(this.modo === 3){
+          this.guardarNumeroUsuarioDos();
+        }
+        else{
+          this.empezoJuego = true;
+          this.mostrarResultado("");
+        }
+      }
+    }
+    else {
+      this.empezoJuego = false;
+      this.mostrarResultado("El número es inválido, por favor revise");
+    }
+  }
+
+  guardarNumeroUsuarioDos(){
+    this.modoDosFormGroup.updateValueAndValidity();
+    if(this.modoDosFormGroup.get("numeroUsuarioDos").valid && validarNumero(this.modoDosFormGroup.get("numeroUsuarioDos").value)  == true){
+      this.numeroUsuarioDos = ListaSimple.crearListaConNumero(this.modoDosFormGroup.get("numeroUsuarioDos").value + "");
+      if(!this.numeroUsuario){
+        this.empezoJuego = false;
+        this.mostrarResultado("El número del usuario dos es inválido, por favor revise");
+      }
+      else {
         this.empezoJuego = true;
         this.mostrarResultado("");
       }
     }
     else {
       this.empezoJuego = false;
-      this.mostrarResultado("El número es inválido, por favor revise");
+      this.mostrarResultado("El número del usuario dos es inválido, por favor revise");
     }
   }
 

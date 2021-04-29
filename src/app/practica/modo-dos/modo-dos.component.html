@@ -21,7 +21,7 @@
             <mat-label>
               <p style="text-align: center;"> Número para que el contrincante adivine </p>
             </mat-label>            
-            <input type="text" formControlName="numeroUsuario" matInput
+            <input type="text" formControlName="numeroUsuarioDos" matInput
               placeholder="Escriba un número de 4 dígitos sin repetir">
           </mat-form-field>
         </div>
@@ -36,6 +36,13 @@
             <input type="text" formControlName="numeroAdivinarUsuario" matInput
               placeholder="Escriba el número que cree que la máquina eligió">
           </mat-form-field>
+          <div *ngIf="modo === 3">
+            <mat-form-field class="example-full-width">
+              <mat-label>Número Segundo jugador</mat-label>
+              <input type="text" formControlName="numeroAdivinarUsuarioDos" matInput
+                placeholder="Escriba el número que cree que la máquina eligió">
+            </mat-form-field>
+          </div>
         </div>
         <div>
           <button mat-raised-button (click)="adivinarUsuario()">Adivinar</button>
