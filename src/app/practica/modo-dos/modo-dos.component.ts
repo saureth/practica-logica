@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
 import { ListaSimple } from '../lista-simple/lista-simple';
 import { validarNumero } from '../otros/validadores';
@@ -9,7 +9,7 @@ import { validarNumero } from '../otros/validadores';
   styleUrls: ['./modo-dos.component.css']
 })
 export class ModoDosComponent implements OnInit {
-
+  @Input() modo: any;
   modoDosFormGroup: any;
   numeroUsuario: any;
   numeroMaquina: any;
@@ -103,11 +103,27 @@ export class ModoDosComponent implements OnInit {
       }
       else {
         this.comparar(this.listaUsuario, true);
-        this.adivinarMaquina();
+        !!(this.modo === 3)? this.adivinarUsuarioDos(): this.adivinarMaquina();
       }
     }
     else{
       this.mostrarResultado("El número es inválido, por favor revise");
+    }
+  }
+
+  adivinarUsuarioDos() {
+    let _sUsuario: string = this.modoDosFormGroup.get("numeroAdivinarUsuarioDos").value.toString(); // obtengo los 4 dígitos del usuario como string
+    if(this.modoDosFormGroup.get("numeroAdivinarUsuarioDos").valid && validarNumero(_sUsuario)  == true) {
+      this.listaUsuario = ListaSimple.crearListaConNumero(_sUsuario);
+      if(!this.listaUsuario){
+        this.mostrarResultado("El número del usuario dos es inválido, por favor revise");
+      }
+      else {
+        this.comparar(this.listaUsuario, true);
+      }
+    }
+    else{
+      this.mostrarResultado("El número del usuario dos es inválido, por favor revise");
     }
   }
 
