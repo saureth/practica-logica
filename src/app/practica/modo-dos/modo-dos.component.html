@@ -2,8 +2,25 @@
     <form class="form" [formGroup]="modoDosFormGroup">
       <div class="configuracion" *ngIf="!empezoJuego">
         <div>
+          <mat-label *ngIf="modo === 3">
+            <p style="text-align: center;"> Está jugando contra otro jugador </p>
+          </mat-label>
+          <mat-label *ngIf="modo != 3">
+            <p style="text-align: center;"> Está jugando contra la máquina </p>
+          </mat-label>
           <mat-form-field class="example-full-width">
-            <mat-label>Número para que la máquina adivine</mat-label>
+            <mat-label>
+              <p style="text-align: center;"> Número para que el contrincante adivine </p>
+            </mat-label>
+            <input type="text" formControlName="numeroUsuario" matInput
+              placeholder="Escriba un número de 4 dígitos sin repetir">
+          </mat-form-field>
+        </div>
+        <div *ngIf="modo === 3">
+          <mat-form-field class="example-full-width">
+            <mat-label>
+              <p style="text-align: center;"> Número para que el contrincante adivine </p>
+            </mat-label>            
             <input type="text" formControlName="numeroUsuario" matInput
               placeholder="Escriba un número de 4 dígitos sin repetir">
           </mat-form-field>
