@@ -29,7 +29,6 @@ export class ModoDosComponent implements OnInit {
   adivinoMaquina = false;
   empezoJuego = false;
 
-  numerValido = false;
   
   constructor(private readonly formBuilder: FormBuilder) {
     this.createModoDosFormGroup();
@@ -58,11 +57,20 @@ export class ModoDosComponent implements OnInit {
   }
 
   comparar(lista: ListaSimple, esUsuario: boolean){
+    if (this.adivinoUsuario || this.adivinoMaquina) {
+      return;
+    }
     let _picas: number = 0;
     let _fijas: number = 0;
+    let _lista: ListaSimple;
+    if (!!esUsuario) {
+      _lista = this.numeroMaquina;
+    }
+    else _lista = this.numeroUsuario;
+
     for (let index = 0; index < this.cantidadDigitos; index++) { // itero sobre cada uno de esos 4 dígitos
       let _nUsuario = lista.retornaNumeroEnPosicion(index); //tomo el dígito en esa posición y lo vuelvo un número
-      let posicionEncontrado = this.numeroMaquina?.buscarPosicionNumero(_nUsuario); // busco si en la lista está ese # y retorno la posición
+      let posicionEncontrado = _lista.buscarPosicionNumero(_nUsuario); // busco si en la lista está ese # y retorno la posición
       if (posicionEncontrado == -1) { // Esto es si el dígito no está en ninguna posición de la lista
         //console.log("No hay ni pica ni fija");
       }
@@ -77,7 +85,9 @@ export class ModoDosComponent implements OnInit {
 
     if (_fijas == 4) {
       !!esUsuario ? this.adivinoUsuario = true: this.adivinoMaquina = true;
-      this.mostrarResultado(" ¡¡ Adivinó !! ");
+      let s = " ¡¡ Adivinó ";
+      !!esUsuario ? s += "usuario !!": s += "máquina !!";
+      this.mostrarResultado(s);
     } else if(!this.adivinoUsuario && !this.adivinoMaquina && !!esUsuario){
       this.mostrarResultado("Obtuvo " + _picas + " picas y " + _fijas+ " fijas");
     }
