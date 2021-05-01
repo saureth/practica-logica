@@ -253,7 +253,7 @@ export class ModoDosComponent implements OnInit {
     this.modoDosFormGroup.updateValueAndValidity();
     if(this.modoDosFormGroup.get("numeroUsuarioDos").valid && validarNumero(this.modoDosFormGroup.get("numeroUsuarioDos").value)  == true){
       this.numeroUsuarioDos = ListaSimple.crearListaConNumero(this.modoDosFormGroup.get("numeroUsuarioDos").value + "");
-      if(!this.numeroUsuario){
+      if(!this.numeroUsuarioDos){
         this.empezoJuego = false;
         this.mostrarResultado("El número del usuario dos es inválido, por favor revise");
       }
