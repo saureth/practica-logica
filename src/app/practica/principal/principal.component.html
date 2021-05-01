@@ -22,7 +22,7 @@
         <app-modo-uno></app-modo-uno>
     </div>
     <div class="game-two" *ngIf="gameIsSelected == true && selectedGame == 2 " >
-        <app-modo-dos></app-modo-dos>
+        <app-modo-dos [modo]="selectedGame"></app-modo-dos>
     </div>
     <div class="game-two" *ngIf="gameIsSelected == true && selectedGame == 3 " >
         <app-modo-dos [modo]="selectedGame"></app-modo-dos>
