@@ -29,6 +29,7 @@ export class ModoDosComponent implements OnInit {
 
   adivinoUsuario = false;
   adivinoMaquina = false;
+  adivinoUsuarioDos = false;
   empezoJuego = false;
 
   
@@ -81,17 +82,17 @@ export class ModoDosComponent implements OnInit {
     });
   }
 
-  comparar(lista: ListaSimple, esUsuario: boolean, cualUsuario?: number){
-    if (this.adivinoUsuario || this.adivinoMaquina) {
+  comparar(lista: ListaSimple, esUsuarioUno: boolean){
+    if (this.adivinoUsuario || this.adivinoMaquina || this.adivinoUsuarioDos) {
       return;
     }
     let _picas: number = 0;
     let _fijas: number = 0;
     let _lista: ListaSimple;
-    if (!!esUsuario && this.modo === 2) { 
+    if (!!esUsuarioUno && this.modo === 2) { 
       // Si el que está jugando es el usuario y además el contrincante es la máquina
       _lista = this.numeroMaquina; // la lista que tiene que adivinar es la de la máquina
-    }else if(!!esUsuario && this.modo === 3){
+    }else if(!!esUsuarioUno && this.modo === 3){
       // Si el que está jugando es el usuario PERO el contrincante es el otro usuario
       _lista = this.numeroUsuarioDos; // la lista que tiene que adivinar es la del segundo usuario
     }
@@ -114,36 +115,43 @@ export class ModoDosComponent implements OnInit {
 
     if (_fijas == 4) {
       // Si hay 4 fijas, es que el que está jugando ganó
-      !!esUsuario ? this.adivinoUsuario = true: this.adivinoMaquina = true;
-      let s = " ¡¡ Adivinó ";
-      !!esUsuario ? s += "usuario !!": s += "máquina !!";
+      let s = " ¡¡ Adivinó " ;
+      if(!!esUsuarioUno){
+        this.adivinoUsuario = true;
+        s += "usuario uno !!"
+      }
+      else if (!!(this.modo === 3)){
+        this.adivinoUsuarioDos = true;
+        s += "usuario dos !!"
+      }
+      else{
+        this.adivinoMaquina = true;
+        s += "máquina !!"
+      }
       this.mostrarResultado(s);
     }
     else {
       // Si no hay 4 fijas, se muestra el resultado
-      this.calcularTextoResultado(esUsuario,_picas,_fijas,lista,cualUsuario);
+      this.calcularTextoResultado(esUsuarioUno,_picas,_fijas,lista);
     }
       
   }
 
-  calcularTextoResultado(esUsuario: boolean, _picas:number, _fijas: number, lista: ListaSimple, cualUsuario?: number) {
-    if(this.modo === 2 && !!esUsuario){
-      // Si está jugador vs máquina y el que está jugando es el jugador uno, se muestra el resultado 
+  calcularTextoResultado(esUsuario: boolean, _picas:number, _fijas: number, lista: ListaSimple) {
+    if(!!esUsuario){
+      // Si el que está jugando es el jugador uno, se muestra el resultado 
       // y se actualiza la primera tabla
-      this.mostrarResultado("Obtuvo " + _picas + " picas y " + _fijas+ " fijas");
+      this.mostrarResultado("Jugador 1: Obtuvo " + _picas + " picas y " + _fijas+ " fijas");
       this.actualizarDatos(_fijas, _picas, true);
     }
-    else if(this.modo === 2){
-      // Si está jugando contra la máquina y el que está jugando es la máquina, actualiza la tabla
-      this.actualizarDatos(_fijas, _picas, false, ListaSimple.obtenerNumeroComoString(this.listaMaquina));
-    }
-    else if(cualUsuario === 2){
-      this.mostrarResultado( this.resultadoUltimoIntento+ "Jugador 2: Obtuvo " + _picas + " picas y " + _fijas+ " fijas " );
+    else if (this.modo === 3){
+      // Si no es el jugador uno y el modo es tres, se agrega texto de jugador dos y se actualiza la segunda tabla
+      this.mostrarResultado( this.resultadoUltimoIntento+ " Jugador 2: Obtuvo " + _picas + " picas y " + _fijas+ " fijas " );
       this.actualizarDatos(_fijas, _picas, false, ListaSimple.obtenerNumeroComoString(lista));
     }
-    else{
-      this.mostrarResultado("Jugador 1: Obtuvo " + _picas + " picas y " + _fijas+ " fijas " );
-      this.actualizarDatos(_fijas, _picas, true);
+    else {
+      // Si está jugando contra la máquina y el que está jugando es la máquina, actualiza la tabla
+      this.actualizarDatos(_fijas, _picas, false, ListaSimple.obtenerNumeroComoString(this.listaMaquina));
     }
   }
 
@@ -176,7 +184,7 @@ export class ModoDosComponent implements OnInit {
       }
       else {
         this.comparar(this.listaUsuario, true);
-        this.comparar(this.listaUsuarioDos, false, 2);
+        this.comparar(this.listaUsuarioDos, false);
       }
     }
     else{
