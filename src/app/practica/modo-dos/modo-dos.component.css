@@ -9,6 +9,11 @@
 
 .resultado{
     padding-top: 2em;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
 }
 
 .example-full-width{
@@ -16,6 +21,14 @@
 }
 
 .configuracion{
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.juego{
     display: flex;
     flex-direction: column;
     flex-wrap: wrap;
